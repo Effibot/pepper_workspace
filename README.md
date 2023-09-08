@@ -9,7 +9,8 @@ Repository for a `ROS2(foxy) workspace` with `vscode` settings. Using `remote co
 ## Prerequisites
 
 To use the an NVIDIA GPU, you need to install the `NVIDIA Container Toolkit` and setup a proper runtime. More info about it in the [NVIDIA's offical documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
-If you want to use Intel GPU use build the right container. VSCode will prompt you with two possible container to build, then select the `Mesa` container.
+
+If you want to use Intel GPU use build the right container: VSCode will prompt you with two possible container to build, then select the `Mesa` container.
 
 ## How to use
 
