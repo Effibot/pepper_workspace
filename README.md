@@ -6,11 +6,16 @@
 
 Repository for a `ROS2(foxy) workspace` with `vscode` settings. Using `remote container`, once you open the workspace in vscode, it will automatically build the workspace and install the vscode extensions. Feel free to modify the `Dockerfiles` and other stuffs to your needs.
 
+To build the container use VSCode remote-container extensions as follows:
+1. `CTRL + SHIFT + P` to open the command list
+2. Type in the textbox `open folder in container` and select the folder where you cloned the repo.
+3. In the prompted menu, select the container that you want to build. Ther are options for NVIDIA and Intel GPUs support (read preprequisites in the section below)
+
 ## Prerequisites
 
 To use the an NVIDIA GPU, you need to install the `NVIDIA Container Toolkit` and setup a proper runtime. More info about it in the [NVIDIA's offical documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
 
-If you want to use Intel GPU use build the right container: VSCode will prompt you with two possible container to build, then select the `Mesa` container.
+If you want to use Intel GPU no prerequisite should be needed. As far as I know, this should be true for AMD graphics card either.
 
 ## How to use
 
