@@ -95,5 +95,6 @@
     "black-formatter.args": [
         "--line-length=80",
     ],
-    "svg.preview.background": "transparent"
+    "svg.preview.background": "transparent",
+    "ros.distro": "foxy"
 }

@@ -25,11 +25,10 @@ foxy_f() {
         local setup="$ROS2_INSTALL_PATH/setup.zsh"
         # shellcheck source=/dev/null
         source "$setup"
-        #echo "Sourcing ROS2 Foxy Workspace"
-        local setup_ws="$COLCON_WS/install/setup.zsh"
-        if [ -d "$setup_ws" ]; then
+        local setup_ws_file="$COLCON_WS/install/setup.zsh"
+        if [ -e "$setup_ws_file" ]; then
                 # shellcheck source=/dev/null
-                source "$setup_ws"
+                source "$setup_ws_file"
         fi
         eval "$(register-python-argcomplete3 ros2)"
         eval "$(register-python-argcomplete3 colcon)"

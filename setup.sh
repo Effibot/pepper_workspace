@@ -1,4 +1,5 @@
-#!/bin/zsh
+#! /bin/zsh
+
 set -e
 
 create_missing_links() {
@@ -39,6 +40,6 @@ echo "\nInstalling dependencies...\n"
 
 # assert that ros2 dependencies are downloaded, and install them
 echo "\nInstalling ROS2 dependencies\n"
-env -i SHELL=/bin/zsh zsh -c "source ${ROS2_INSTALL_PATH}/setup.zsh; source ${COLCON_WS}install/setup.zsh \
+env -i SHELL=/bin/zsh zsh -c "source ${ROS2_INSTALL_PATH}/setup.zsh; source ${COLCON_WS}/install/setup.zsh \
 && cd ${COLCON_WS} && vcs import < src/ros2.repos src\
 && rosdep install --from-paths src --ignore-src -y --rosdistro ${ROS2_DISTRO}"
