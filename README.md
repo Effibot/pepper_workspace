@@ -56,7 +56,7 @@ If you want to use some other packages, the recommended way to install them are:
 6. In the `version` field, write the name of the foxy branch that you find on GitHub.
 7. Execute the building pipeline to clone the repository inside `~/colcon_ws/src`[^3] and build it[^4].
 
-[1] If you want, you can add existing packages to your dockerfiles, so that everytime the container is built they are installed by default. This is also true for those packages that you listed in the `ros2.repos` file because the workspace is built a first time when the container is built.
-[2] You can copy one of the other entries and edit the values properly.
-[3] Which means that the downloaded package only affects the container, neither your host machine nor this repository or every package you wrote and you want to keep locally.
-[4] Remember to source your workspace with the `foxy` alias or close and reopen a new shell.
+[1]: If you want, you can add existing packages to your dockerfiles, so that everytime the container is built they are installed by default. This is also true for those packages that you listed in the `ros2.repos` file because the workspace is built a first time when the container is built.
+[2]: You can copy one of the other entries and edit the values properly.
+[3]: Which means that the downloaded package only affects the container, neither your host machine nor this repository or every package you wrote and you want to keep locally.
+[4]: Remember to source your workspace with the `foxy` alias or close and reopen a new shell.
