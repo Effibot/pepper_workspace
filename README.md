@@ -44,13 +44,19 @@ Recap for the pipeline that users should follow to build the workspace is the fo
 1. run `./setup.sh` (or `ros_setup` alias) to update ros repositories, install missing depencencies and makes symbolic links.
 2. run `./build.sh` (or `ros_build` alias) to build the `colcon workspace`.
 
-> Use external repositories
+> Use additional packages
 
 If you want to use some other packages, the recommended way to install them are:
 
 1. Check if your package exists on Debian's repositories with `apt-cache search ros-foxy-\* | grep package_name`.
-2. If you can find it, then install it with `sudo apt install package_name`.
-3. If you can't find it, you have to build it from source.
-  * go to github page of the desired package and *check if a branch for foxy exists*.
-  * If so, copy the link from the clone button in the `.devcontainer/config/ros2.repos` file according to the `vcs` signature. You can copy one of the other entries and edit the values properly.
-  * In the `version` field, write the name of the foxy branch that you find on GitHub.
+2. If you can find it, then install it with `sudo apt install package_name`[^1].
+3. If you can't find it (__or the apt-installed version doesn't work__), you have to build it from source.
+4. Go to github page of the desired package and *__check if a branch for foxy exists__*.
+5. If so, copy the link from the clone button in the `.devcontainer/config/ros2.repos` file according to the `vcs` signature[^2]. 
+6. In the `version` field, write the name of the foxy branch that you find on GitHub.
+7. Execute the building pipeline to clone the repository inside `~/colcon_ws/src`[^3] and build it[^4].
+
+[1] If you want, you can add existing packages to your dockerfiles, so that everytime the container is built they are installed by default. This is also true for those packages that you listed in the `ros2.repos` file because the workspace is built a first time when the container is built.
+[2] You can copy one of the other entries and edit the values properly.
+[3] Which means that the downloaded package only affects the container, neither your host machine nor this repository or every package you wrote and you want to keep locally.
+[4] Remember to source your workspace with the `foxy` alias or close and reopen a new shell.
