@@ -52,12 +52,12 @@ If you want to use some other packages, the recommended way to install them are:
 2. If you can find it, then install it with `sudo apt install package_name`[^1].
 3. If you can't find it (__or the apt-installed version doesn't work__), you have to build it from source as described below.
 
->> Build from source
+  > Build from source
 
-1. Go to github page of the desired package and *__check if a branch for foxy exists__*.
-2. If so, copy the link from the clone button in the `.devcontainer/config/ros2.repos` file according to the `vcs` signature[^2]. 
-3. In the `version` field, write the name of the foxy branch that you find on GitHub.
-4. Execute the building pipeline to clone the repository inside `~/colcon_ws/src`[^3] and build it[^4].
+  1. Go to github page of the desired package and *__check if a branch for foxy exists__*.
+  2. If so, copy the link from the clone button in the `.devcontainer/config/ros2.repos` file according to the `vcs` signature[^2]. 
+  3. In the `version` field, write the name of the foxy branch that you find on GitHub.
+  4. Execute the building pipeline to clone the repository inside `~/colcon_ws/src`[^3] and build it[^4].
 
 [^1]: If you want, you can add existing packages to your dockerfiles, so that everytime the container is built they are installed by default. This is also true for those packages that you listed in the `ros2.repos` file because the workspace is built a first time when the container is built.
 [^2]: You can copy one of the other entries and edit the values properly.
