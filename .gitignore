@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+*.log
+*.db
+*.sqlite3
+*.swp
+*.swo
+
+# C++
+*.out
+*.o
+*.obj
+*.dll
+*.so
+*.dylib
+*.exe
+*.pdb
+*.gch
+*.gcda
+*.gcno
+*.ilk
+*.sbr
