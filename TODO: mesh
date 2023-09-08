@@ -1,0 +1,4 @@
+per far funzionare le mesh
+scaricare da https://github.com/Effibot/pepper_meshes2.git
+nel cmake trovare il modo di far creare bene la cartella meshes/tmp
+forzare dal cmake ./installer.run e assicurarsi di rendere eseguibili i file delle mesh

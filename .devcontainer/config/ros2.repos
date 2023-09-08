@@ -1,0 +1,26 @@
+# List of repositories to use within your workspace
+repositories:
+  libqicore:
+    type: git
+    url: https://github.com/ros-naoqi/libqicore.git
+    version:  ros2
+  naoqi_bridge_msgs2:
+    type: git
+    url: https://github.com/Effibot/naoqi_bridge_msgs2
+    version: main
+  naoqi_driver2:
+    type: git
+    url: https://github.com/Effibot/naoqi_driver2.git
+    version: main
+  navigation2:
+    type: git
+    url: https://github.com/Effibot/navigation2-foxy.git
+    version: foxy-devel
+  pepper_meta:
+    type: git
+    url: https://github.com/Effibot/pepper_meta.git
+    version: main
+  #pepper_meshes2:
+  #  type: git
+  #  url: https://github.com/Effibot/pepper_meshes2.git
+  #  version: main

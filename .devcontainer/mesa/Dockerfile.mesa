@@ -1,0 +1,228 @@
+FROM ubuntu:20.04 AS base
+
+# Set up environment
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ROS2_DISTRO=foxy
+ENV ROS2_INSTALL_PATH=/opt/ros/foxy
+ENV AMENT_PREFIX_PATH=/opt/ros/foxy
+ENV COLCON_PREFIX_PATH=/opt/ros/foxy
+ENV ROS_PYTHON_VERSION=3
+ENV EDITOR=nano
+
+# Install language
+RUN apt update && apt install -y \
+        locales \
+        && locale-gen en_US.UTF-8 \
+        && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+
+# Install timezone
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
+        && export DEBIAN_FRONTEND=noninteractive \
+        && apt install -y tzdata \
+        && dpkg-reconfigure --frontend noninteractive tzdata
+
+# Install common programs
+RUN apt install -y \
+        apt-utils \
+        bash-completion \
+        bat \
+        build-essential \
+        cmake make \
+        curl \
+        fzf \
+        g++ \
+        gcc \
+        gdb \
+        git \
+        git-core \
+        git-lfs \
+        gnupg2 \
+        inetutils-* \
+        libbz2-dev \
+        lsb-release \
+        nano \
+        openssh-client \
+        sudo \
+        shellcheck \
+        software-properties-common \
+        wget \
+        unzip \
+        uncrustify \
+        && add-apt-repository universe \
+        && apt update && apt -y full-upgrade
+
+################
+# Expose the nvidia driver to allow opengl rendering.
+# Dependencies for glvnd and X11.
+################
+RUN apt update \
+        && apt install -y -qq --no-install-recommends \
+        libglvnd0 \
+        libgl1 \
+        libglx0 \
+        libegl1 \
+        libxext6 \
+        libx11-6
+
+# Env vars for the nvidia-container-runtime.
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
+ENV QT_X11_NO_MITSHM 1
+
+# Install ROS2 - Foxy
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null \
+        && apt update && apt install -y \
+        ros-foxy-desktop \
+        ros-foxy-gazebo*
+
+# Install additional packages
+RUN apt install --fix-missing -y \
+        python3-dev \
+        python3-colcon-common-extensions \
+        python3-osrf-pycommon \
+        python3-rosdep \
+        python3-rosinstall \
+        python3-rosinstall-generator \
+        python3-vcstool \
+        python3-wstool \
+        python3-pip \
+        python3-pep8 \
+        python3-autopep8 \
+        pylint3 \
+        python3-argcomplete \
+        ros-dev-tools \
+        ros-foxy-ament-cmake-uncrustify \
+        ros-foxy-ament-uncrustify \
+        ros-foxy-rmf-cmake-uncrustify \
+        virtualenv \
+        virtualenvwrapper
+
+# Create a non-root user
+ARG USERNAME=ros
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+ENV HOME=/home/$USERNAME
+
+RUN groupadd --gid $USER_GID $USERNAME \
+        && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+        # Add sudo support for the non-root user
+        && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
+        && chmod 0440 /etc/sudoers.d/$USERNAME \
+        # Add support for XDG_RUNTIME_DIR
+        && mkdir -m 0700 -p /run/user/$USER_UID \
+        && chown $USER_UID:$USER_GID /run/user/$USER_UID
+
+
+# change user
+USER $USERNAME
+
+# Install ZSH
+COPY --chown=$USER_UID:$USER_UID ./config/zsh_docker.sh $HOME
+RUN cd $HOME && chmod +x zsh_docker.sh && ./zsh_docker.sh \
+        -p git \
+        -p git-extras \
+        -p git-flow \
+        -p command-not-found \
+        -p colorize \
+        -p common-aliases \
+        -p sudo \
+        -p https://github.com/changyuheng/zsh-interactive-cd \
+        -p https://github.com/chrissicool/zsh-256color \
+        -p https://github.com/zsh-users/zsh-autosuggestions \
+        -p https://github.com/zsh-users/zsh-completions \
+        -p https://github.com/zshzoo/cd-ls \
+        -p https://github.com/zdharma-continuum/fast-syntax-highlighting \
+        -a "set CD_LS_COMMAND=lsd" \
+        && rm -f $HOME/zsh_docker.sh
+
+# Install LSD for ls substitute
+RUN wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb -P /tmp && \
+        sudo dpkg -i /tmp/lsd_0.23.1_amd64.deb && \
+        rm /tmp/lsd_0.23.1_amd64.deb
+
+# install pip2
+RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -P /tmp && \
+        sudo python2 /tmp/get-pip.py
+
+# Setup venvs for python2 support -> needed by NAOqi-SDK #
+
+ENV VENVS=$HOME/venvs
+ENV NAOQI=$HOME/naoqi
+ENV PYTHONPATH=$NAOQI/pynaoqi/lib/python2.7/site-packages:$PYTHONPATH
+ENV PATH=$PATH:$HOME/.local/bin
+
+# Create virtual environment
+RUN virtualenv --system-site-packages -p python2.7 ${VENVS}/py27 && \
+        # update pip and install basic things on python2.7
+        ./${VENVS}/py27/bin/python -m pip install --user --no-cache-dir --upgrade pip && \
+        ./${VENVS}/py27/bin/python -m pip install --user --no-cache-dir --upgrade \
+        numpy scipy matplotlib pbr autopep8==1.6.0 pylint pandas joblib opencv-contrib-python==4.2.0.32
+
+# download and install NAOqi SDK
+RUN mkdir -p $HOME/naoqi && \
+        wget https://community-static.aldebaran.com/resources/2.5.10/Python%20SDK/pynaoqi-python2.7-2.5.7.1-linux64.tar.gz -P /tmp && \
+        wget https://community-static.aldebaran.com/resources/2.5.10/NAOqi%20SDK/naoqi-sdk-2.5.7.1-linux64.tar.gz -P /tmp && \
+        tar -xvzf /tmp/pynaoqi-python2.7-* -C $NAOQI && mv $NAOQI/pynaoqi-* $NAOQI/pynaoqi && \
+        tar -xvzf /tmp/naoqi-sdk-* -C $NAOQI && mv $NAOQI/naoqi-sdk-* $NAOQI/naoqi-sdk && \
+        rm -rf /tmp/pynaoqi-python2.7-* && \
+        rm -rf /tmp/naoqi-sdk-*
+
+# Intall python packages
+RUN pip3 install -U --no-cache-dir numpy matplotlib plotly opencv-contrib-python
+RUN pip2 install -U --no-cache-dir qibuild
+
+# Setup qi toolchain for naoqi
+RUN cd $CATKIN_WS && echo '1\n\1\n' | ~/.local/bin/qibuild config --wizard \
+        && qibuild init && cd $NAOQI/naoqi-sdk \
+        && qitoolchain create mytoolchain toolchain.xml \
+        && cd $HOME && qibuild add-config myconfig -t mytoolchain --default
+
+# Initialize ROS depedencies
+RUN sudo $(which rosdep) init && rosdep update --include-eol-distros && \
+        sudo apt update \
+        && apt list --upgradable | tail -n +2 | awk -F'/' '{print $1}' | \
+        xargs -r sudo apt full-upgrade -y --allow-change-held-packages
+
+# Install additional ROS2 packages
+RUN zsh -c "source /opt/ros/foxy/setup.zsh \
+        && sudo apt update \
+        && sudo apt install -y \
+        ros-foxy-moveit \
+        ros-foxy-slam-toolbox \
+        ros-foxy-rtabmap-ros \
+        ros-foxy-robot-localization \
+        ros-foxy-rqt\* \
+        ros-foxy-moveit \
+        ros-foxy-moveit-ros \
+        ros-foxy-move-base-msgs \
+        ros-foxy-naoqi-libqi \
+        ros-foxy-pointcloud-to-laserscan"
+
+# Prepare colcon workspace
+ENV COLCON_WS=/home/$USERNAME/colcon_ws
+RUN mkdir -p /home/$USERNAME/colcon_ws/src \
+        && chown -R $USERNAME:$USERNAME /home/$USERNAME/colcon_ws
+
+# Initialize colcon workspace and build desired packages
+COPY --chown=$USER_UID:$USER_UID ./config/ros2.repos $COLCON_WS/src
+RUN sudo apt update && cd $COLCON_WS \
+        && vcs import < src/ros2.repos src\
+        && rosdep install --from-paths src --ignore-src -y --rosdistro ${ROS2_DISTRO} \
+        && zsh -c 'source /opt/ros/foxy/setup.zsh \
+        && colcon build --merge-install --symlink-install \
+        --cmake-args "-DCMAKE_BUILD_TYPE=RelWithDebInfo" \
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=On" -Wall -Wextra -Wpedantic'\
+        && rm -rf src/ros2.repos \
+        && echo "foxy_f" >> ~/.zshrc
+
+# Clean up
+RUN sudo apt autoremove -y && sudo apt clean -y \
+        && sudo rm -rf /var/lib/apt/lists/*
+
+# Entry point
+ENV DEBIAN_FRONTEND=dialog
+WORKDIR /home/$USERNAME
+CMD ["/bin/zsh"]
