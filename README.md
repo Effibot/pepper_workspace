@@ -21,6 +21,7 @@ If you want to use Intel GPU no prerequisite should be needed. As far as I know,
 
 The container is splitted in two workspaces. The one that you "can see" is made by every files that are in the repo's folder. This is possible because the local workspace is mounted in the container automatically by VSCode. The second workspace (ROS2 workspace inside the colcon_ws folder) lives inside the container, and can be explored as a normal file system using terminal.
 
+>The file system
 If you want explore container's file system with VSCode just write in the terminal the command `code /`. This will open a new VSCode window where the root of the filesystem is mounted. 
 
 To prevent accidental damage, instead of the root (`/`) foolder just type the path of the folder that you want to inspect. You can then navigate to the desired folder using the terminal and then use `code .` to get the same behavior. 
@@ -42,3 +43,14 @@ Recap for the pipeline that users should follow to build the workspace is the fo
 
 1. run `./setup.sh` (or `ros_setup` alias) to update ros repositories, install missing depencencies and makes symbolic links.
 2. run `./build.sh` (or `ros_build` alias) to build the `colcon workspace`.
+
+> Use external repositories
+
+If you want to use some other packages, the recommended way to install them are:
+
+1. Check if your package exists on Debian's repositories with `apt-cache search ros-foxy-\* | grep package_name`.
+2. If you can find it, then install it with `sudo apt install package_name`.
+3. If you can't find it, you have to build it from source.
+  * go to github page of the desired package and *check if a branch for foxy exists*.
+  * If so, copy the link from the clone button in the `.devcontainer/config/ros2.repos` file according to the `vcs` signature. You can copy one of the other entries and edit the values properly.
+  * In the `version` field, write the name of the foxy branch that you find on GitHub.
