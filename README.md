@@ -15,7 +15,7 @@ If you want to use Intel GPU use build the right container. VSCode will prompt y
 
 The container is splitted in two workspaces. The one that you "can see" is made by every files that are in the repo's folder. This is possible because the local workspace is mounted in the container automatically by VSCode. The second workspace (ROS2 workspace inside the colcon_ws folder) lives inside the container, and can be explored as a normal file system using terminal.
 
->> If you want explore container's file system with VSCode just write in the terminal the command `code /`. This will open a new VSCode window where the root of the filesystem is mounted. To prevent accidental damage, instead of the root (`/`) foolder just type the path of the folder that you want to inspect. You can navigate to the desired folder using the terminal and then use `code .` to get the same behavior. Fullpath of the folder can also be given to the `code` command if you want to open desired folder from everywhere. An alias for this could be set in the `/.devcontainer/config/.aliases.sh` file.
+If you want explore container's file system with VSCode just write in the terminal the command `code /`. This will open a new VSCode window where the root of the filesystem is mounted. To prevent accidental damage, instead of the root (`/`) foolder just type the path of the folder that you want to inspect. You can navigate to the desired folder using the terminal and then use `code .` to get the same behavior. Fullpath of the folder can also be given to the `code` command if you want to open desired folder from everywhere. An alias for this could be set in the `/.devcontainer/config/.aliases.sh` file.
 
 >the `setup.sh` file
 
