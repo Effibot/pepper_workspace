@@ -29,5 +29,6 @@ This file is used to build the workspace. Remember that this should be the only 
 > building pipepline
 
 Recap for the pipeline that users should follow to build the workspace is the following:
+
 1 run `./setup.sh` (or `ros_setup` alias) to update ros repositories, install missing depencencies and makes symbolic links.
 2 run `./build.sh` (or `ros_build` alias) to build the `colcon workspace`.
