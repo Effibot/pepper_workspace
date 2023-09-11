@@ -3,7 +3,7 @@ repositories:
   libqicore:
     type: git
     url: https://github.com/ros-naoqi/libqicore.git
-    version:  ros2
+    version: ros2
   naoqi_bridge_msgs2:
     type: git
     url: https://github.com/Effibot/naoqi_bridge_msgs2
