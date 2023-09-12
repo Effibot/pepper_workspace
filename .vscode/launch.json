@@ -19,6 +19,17 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
+      "preLaunchTask": "",
+      "autoReload": {
+        "enable": true,
+        "match": [
+          "${workspaceFolder}/**/*.py"
+        ],
+        "ignore": [
+          "${workspaceFolder}/.vscode/**"
+        ]
+      }
+
     },
     // Example gdb launch of a ros executable
     {
