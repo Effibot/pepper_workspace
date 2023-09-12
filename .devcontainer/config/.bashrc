@@ -9,7 +9,6 @@ if ! echo "$BOARD" | grep -q 'up' && ! echo "$BOARD" | grep -q 'nx'; then
   export PATH=/opt/gcc-arm-none-eabi-9-2020-q2-update/bin:$PATH
 fi
 
-
 # If not running interactively, don't do anything
 case $- in
 *i*) ;;
@@ -65,10 +64,11 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;91m\]\u@\h\[\033[00m\] \[\033[01;94m\]\W\[\033[01;33m\] `__git_ps1 '[%s]'`\[\033[00m\] \$ '
+  PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;91m\]\u@\h\[\033[00m\] \[\033[01;94m\]\W\[\033[01;33m\] \`__git_ps1 '[%s]'\`\[\033[00m\] \$ "
 else
-  PS1='${debian_chroot:+($debian_chroot)}\u:\w `__git_ps1 '[%s]'` \$ '
+  PS1="\${debian_chroot:+(\$debian_chroot)}\u:\w \`__git_ps1 '[%s]'\` \$ "
 fi
+
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -105,9 +105,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 # Additional aliases
-if [ -f ~/.aliases.sh ]; then
-  . ~/.aliases.sh
-fi
+#if [ -f ~/.aliases.sh ]; then
+#  source ~/.aliases.sh
+#fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -121,4 +121,23 @@ if ! shopt -oq posix; then
 fi
 
 # Favorite program choices
-EDITOR=/usr/bin/nanosource ~/.aliases.sh
+export EDITOR=/usr/bin/nano
+
+# ROS2
+foxy_f() {
+  #echo "Sourcing ROS2 Foxy"
+  local setup="$ROS2_INSTALL_PATH/setup.bash"
+  # shellcheck source=/dev/null
+  source "$setup"
+  local setup_ws_file="$COLCON_WS/install/setup.bash"
+  if [ -e "$setup_ws_file" ]; then
+    # shellcheck source=/dev/null
+    source "$setup_ws_file"
+  fi
+  eval "$(register-python-argcomplete3 ros2)"
+  eval "$(register-python-argcomplete3 colcon)"
+  # shellcheck source=/dev/null
+  source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+}
+
+foxy_f

@@ -29,6 +29,20 @@ create_missing_links() {
     done
 }
 
+setup() {
+    local setup="$ROS2_INSTALL_PATH/setup.zsh"
+    local setup_ws_file="$COLCON_WS/install/setup.zsh"
+    local install_command="cd ${COLCON_WS} && vcs import < src/ros2.repos src\
+            && rosdep install --from-paths src --ignore-src -y --rosdistro ${ROS2_DISTRO}"
+    if [ -e "$setup_ws_file" ]; then
+        # shellcheck source=/dev/null
+        env -i SHELL=/bin/zsh zsh -c "source $setup; source $setup_ws_file && $install_command"
+    else
+        # shellcheck source=/dev/null
+        env -i SHELL=/bin/zsh zsh -c "source $setup && $install_command"
+    fi
+}
+
 # Create symlinks for colcon_ws
 create_missing_links "${WS}/src" "${COLCON_WS}/src/"
 
@@ -40,6 +54,7 @@ echo "\nInstalling dependencies...\n"
 
 # assert that ros2 dependencies are downloaded, and install them
 echo "\nInstalling ROS2 dependencies\n"
-env -i SHELL=/bin/zsh zsh -c "source ${ROS2_INSTALL_PATH}/setup.zsh; source ${COLCON_WS}/install/setup.zsh \
-&& cd ${COLCON_WS} && vcs import < src/ros2.repos src\
-&& rosdep install --from-paths src --ignore-src -y --rosdistro ${ROS2_DISTRO}"
+#env -i SHELL=/bin/zsh zsh -c "source ${ROS2_INSTALL_PATH}/setup.zsh; source ${COLCON_WS}/install/setup.zsh \
+#&& cd ${COLCON_WS} && vcs import < src/ros2.repos src\
+#&& rosdep install --from-paths src --ignore-src -y --rosdistro ${ROS2_DISTRO}"
+setup

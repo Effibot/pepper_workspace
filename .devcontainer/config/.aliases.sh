@@ -32,6 +32,8 @@ foxy_f() {
         fi
         eval "$(register-python-argcomplete3 ros2)"
         eval "$(register-python-argcomplete3 colcon)"
+        # shellcheck source=/dev/null
+        source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
 }
 
 alias foxy=foxy_f
