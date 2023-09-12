@@ -1,4 +1,4 @@
-#! /bin/zsh
+#! /bin/bash
 set -e
 
 build() {
@@ -9,13 +9,15 @@ build() {
         if [ -e "$setup_ws_file" ]; then
                 # shellcheck source=/dev/null
                 env -i SHELL=/bin/zsh zsh -c "source $setup; source $setup_ws_file; \
-                colcon build $build_args"
+                cd ${COLCON_WS} && colcon build $build_args"
         else
                 echo "No workspace found, launching standard build"
                 env -i SHELL=/bin/zsh zsh -c "source $setup; \
-                colcon build $build_args"
+                cd ${COLCON_WS} && colcon build $build_args"
         fi
-
+        # source the local workspace again to get builded packages
+        # shellcheck source=/dev/null
+        source "$setup_ws_file"
 }
 
 # build ROS2 workspace
