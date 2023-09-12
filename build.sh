@@ -15,9 +15,6 @@ build() {
                 env -i SHELL=/bin/zsh zsh -c "source $setup; \
                 cd ${COLCON_WS} && colcon build $build_args"
         fi
-        # source the local workspace again to get builded packages
-        # shellcheck source=/dev/null
-        source "$setup_ws_file"
 }
 
 # build ROS2 workspace
