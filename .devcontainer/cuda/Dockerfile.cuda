@@ -192,6 +192,7 @@ RUN sudo $(which rosdep) init && rosdep update --include-eol-distros && \
 RUN zsh -c "source /opt/ros/foxy/setup.zsh \
         && sudo apt update \
         && sudo apt install -y \
+        ros-foxy-image-pipeline \
         ros-foxy-moveit \
         ros-foxy-slam-toolbox \
         ros-foxy-rtabmap-ros \
