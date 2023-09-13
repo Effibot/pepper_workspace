@@ -181,9 +181,3 @@ export ws="/workspaces/ROS_Pepper"
 
 # vcs tool completion
 source /usr/share/vcstool-completion/vcs.zsh
-
-# ROS2 commands completion
-eval "$(register-python-argcomplete3 ros2)"
-eval "$(register-python-argcomplete3 colcon)"
-# shellcheck source=/dev/null
-source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh

@@ -20,6 +20,14 @@ repositories:
     type: git
     url: https://github.com/Effibot/pepper_meta.git
     version: main
+  image_pipeline:
+    type: git
+    url: https://github.com/ros-perception/image_pipeline.git
+    version: foxy
+  rgbd_launch:
+    type: git
+    url: https://github.com/simwijs/rgbd_launch.git
+    version: foxy
   #pepper_meshes2:
   #  type: git
   #  url: https://github.com/Effibot/pepper_meshes2.git
