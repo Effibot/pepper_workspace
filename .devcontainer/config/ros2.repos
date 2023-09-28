@@ -28,6 +28,10 @@ repositories:
     type: git
     url: https://github.com/Effibot/rgbd_launch.git
     version: foxy
+  vizanti:
+    type: git
+    url: https://github.com/MoffKalast/vizanti.git
+    version: ros2
   #pepper_meshes2:
   #  type: git
   #  url: https://github.com/Effibot/pepper_meshes2.git
