@@ -55,17 +55,6 @@ pepper() {
         fi
 }
 
-pepperviz() {
-        if [ -z "$1" ]; then
-                echo "No argument supplied"
-                echo "Usage: pepperviz <ip>"
-        else
-                echo "Launching pepper with ip: $1"
-                zsh -c 'ros2 launch naoqi_driver naoqi_driver.launch.py nao_ip:=$1'
-                rviz2 -d ~/colcon_ws/src/naoqi_driver2/share/pepper.rviz
-        fi
-}
-
 map() {
         if [ -z "$1" ]; then
                 echo "No argument supplied"
