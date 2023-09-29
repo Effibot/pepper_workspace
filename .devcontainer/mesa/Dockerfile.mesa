@@ -173,7 +173,7 @@ RUN mkdir -p $HOME/naoqi && \
         rm -rf /tmp/naoqi-sdk-*
 
 # Intall python packages
-RUN pip3 install -U --no-cache-dir numpy matplotlib plotly opencv-contrib-python flask
+RUN pip3 install -U --no-cache-dir numpy matplotlib plotly opencv-contrib-python flask websocket-client websockets
 RUN pip2 install -U --no-cache-dir qibuild
 
 # Setup qi toolchain for naoqi
