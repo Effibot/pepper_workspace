@@ -1,0 +1,5 @@
+Ti sei mai chiesto a quali leggi deve sottostare un robot?.
+Isaac Asimov ha teorizzato queste tre Leggi:.
+1. Un robot non può recar danno a un essere umano né può permettere che, a causa del suo mancato intervento, un essere umano subisca un danno.
+2. Un robot deve obbedire agli ordini impartiti dagli esseri umani, purché tali ordini non vadano in contrasto alla Prima Legge.
+3. Un robot deve proteggere la propria esistenza, purché la salvaguardia di essa non contrasti con la Prima o con la Seconda Legge.

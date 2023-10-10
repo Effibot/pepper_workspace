@@ -1,0 +1,3 @@
+Ciao! Mi chiamo Pepper e sono qui per aiutarti in alcune delle tue attività quotidiane.
+Sono stato programmato dal Laboratorio di Robotica ed Intelligenza Artificiale dell'ENEA.
+Buon divertimento!

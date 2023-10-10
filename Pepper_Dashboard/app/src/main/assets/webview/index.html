@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <title>ROS2 Web Interface</title>
+      Include necessary JavaScript libraries
+     <script src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.js"></script>
+     <script src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>-->
+    <!-- Include your external JavaScript file -->
+    <script src="js/roslib.js"></script>
+    <style>
+        /* Add this CSS to make the container autofit the browser */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .IpadMini831 {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #C3D3C4 0%, rgba(227.09, 243.31, 240.39, 0) 100%);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+            display: inline-flex
+        }
+
+        .PepperDashboard {
+            width: 100%;
+            height: 100%;
+            left: 10px;
+            top: 35px;
+            position: absolute;
+            text-align: center;
+            color: rgba(49.36, 47.88, 55.25, 0.93);
+            font-size: 350%;
+            font-family: Inter;
+            font-weight: 700;
+            line-height: 48px;
+            word-wrap: break-word
+
+        }
+        .pepperimg{
+            width: 332px;
+            height: 563px;
+            left: 10%;
+            top: 150px;
+            position: relative;
+        }
+        .leftbutton{
+            width: 300px;
+            height: 90px;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            left: 10%;
+            top: 200px;
+            position: absolute;
+            background: #106CFF;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px #231C1C solid;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            display: flex;
+            color: white;
+            font-size: 40px;
+            font-family: Inter;
+            font-weight: 700;
+        }
+        .rigthbutton{
+            /*Put the button on the second 2/4 of the screen width*/
+            width: 300px;
+            height: 90px;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            left: 60%;
+            top: 200px;
+            position: absolute;
+            background: #106CFF;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px #231C1C solid;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            display: flex;
+            color: white;
+            font-size: 40px;
+            font-family: Inter;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<div id="prompt" style="display: none;">
+    <p>Welcome to our website!</p>
+    <button id="closePrompt">Close</button>
+</div>
+<!-- Section for webpage content
+<h1>ROS2 Web Interface</h1>
+<button id="publishButton">Publish Number</button>
+<script src="js/main.js"></script> -->
+<div class="IpadMini831">
+    <div class="PepperDashboard">Pepper Dashboard</div>
+    <!--<img class="pepperimg"  src="./img/pepper.png" />
+     Put navButton, expButton,brow button in column on
+    the 2/4 of the width screen -->
+
+    <button class="leftbutton" id="navButton" style="width: 300px; height: 90px; padding-left: 16px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px;  top: 20%; position: absolute; background: #106CFF; border-radius: 6px; overflow: hidden; border: 1px #231C1C solid; justify-content: center; align-items: center; gap: 10px; display: flex; color: white; font-size: 40px; font-family: Inter; font-weight: 700; line-height: 36px;">Navigazione</button>
+    <button class="leftbutton" id="expButton" style="width: 300px; height: 90px; padding-left: 16px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px;  top: 45%; position: absolute; background: #FA09FF; border-radius: 6px; overflow: hidden; border: 1px #231C1C solid; justify-content: center; align-items: center; gap: 10px; display: flex; color: white; font-size: 32px; font-family: Inter; font-weight: 700; line-height: 36px;">Esplorazione</button>
+    <button class="leftbutton" id="browButton" style="width: 300px; height: 90px; padding-left: 16px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px;  top: 70%; position: absolute; background: #03FF4A; border-radius: 6px; overflow: hidden; border: 1px #231C1C solid; justify-content: center; align-items: center; gap: 10px; display: flex; color: white; font-size: 32px; font-family: Inter; font-weight: 700; line-height: 36px;">Apri Browser</button>
+    <button class="rigthbutton" id="misButton" style="width: 300px; height: 90px; padding-left: 16px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px;  top: 20%; position: absolute; background: #FB1717; border-radius: 6px; overflow: hidden; border: 1px #231C1C solid; justify-content: center; align-items: center; gap: 10px; display: flex; text-align: center; color: white; font-size: 48px; font-family: Inter; font-weight: 700; line-height: 36px;">Misura</button>
+    <button class="rigthbutton" id="moveButton" style="width: 300px; height: 90px; padding-left: 16px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px;  top: 45%; position: absolute; background: #FFBA07; border-radius: 6px; overflow: hidden; border: 1px #231C1C solid; justify-content: center; align-items: center; gap: 10px; display: flex; color: white; font-size: 32px; font-family: Inter; font-weight: 700; line-height: 36px;">Abilita Movimento</button>
+    <button class="rigthbutton" id="videoButton" style="width: 300px; height: 90px; padding-left: 16px; padding-right: 16px; padding-top: 12px; padding-bottom: 12px;  top: 70%; position: absolute; background: #0CEEFD; border-radius: 6px; overflow: hidden; border: 1px #231C1C solid; justify-content: center; align-items: center; gap: 10px; display: flex; color: white; font-size: 32px; font-family: Inter; font-weight: 700; line-height: 36px;">YouTube</button>
+</div>
+<script src="js/main.js"></script>
+
+</body>
+</html>
