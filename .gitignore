@@ -27,3 +27,4 @@ build/
 *.gcno
 *.ilk
 *.sbr
+*.gv

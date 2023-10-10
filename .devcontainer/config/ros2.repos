@@ -2,11 +2,11 @@
 repositories:
   libqicore:
     type: git
-    url: https://github.com/ros-naoqi/libqicore.git
+    url: https://github.com/Effibot/libqicore.git
     version: ros2
   naoqi_bridge_msgs2:
     type: git
-    url: https://github.com/Effibot/naoqi_bridge_msgs2
+    url: https://github.com/Effibot/naoqi_bridge_msgs2.git
     version: main
   naoqi_driver2:
     type: git
@@ -19,6 +19,22 @@ repositories:
   pepper_meta:
     type: git
     url: https://github.com/Effibot/pepper_meta.git
+    version: main
+  image_pipeline:
+    type: git
+    url: https://github.com/Effibot/image_pipeline.git
+    version: foxy
+  rgbd_launch:
+    type: git
+    url: https://github.com/Effibot/rgbd_launch.git
+    version: foxy
+  vizanti:
+    type: git
+    url: https://github.com/MoffKalast/vizanti.git
+    version: ros2
+  ros_naoqi_tts:
+    type: git
+    url: https://github.com/Effibot/ros_naoqi_tts.git
     version: main
   #pepper_meshes2:
   #  type: git

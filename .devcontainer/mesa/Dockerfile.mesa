@@ -80,6 +80,7 @@ RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o 
 
 # Install additional packages
 RUN apt install --fix-missing -y \
+        python-dev \
         python3-dev \
         python3-colcon-common-extensions \
         python3-colcon-hardware-acceleration \
@@ -172,7 +173,8 @@ RUN mkdir -p $HOME/naoqi && \
         rm -rf /tmp/naoqi-sdk-*
 
 # Intall python packages
-RUN pip3 install -U --no-cache-dir numpy matplotlib plotly opencv-contrib-python
+RUN pip3 install -U --no-cache-dir numpy matplotlib plotly opencv-contrib-python flask \
+        websocket-client websockets aiohttp cchardet aiodns
 RUN pip2 install -U --no-cache-dir qibuild
 
 # Setup qi toolchain for naoqi
@@ -191,10 +193,12 @@ RUN sudo $(which rosdep) init && rosdep update --include-eol-distros && \
 RUN zsh -c "source /opt/ros/foxy/setup.zsh \
         && sudo apt update \
         && sudo apt install -y \
+        ros-foxy-image-pipeline \
         ros-foxy-moveit \
         ros-foxy-slam-toolbox \
         ros-foxy-rtabmap-ros \
         ros-foxy-robot-localization \
+        ros-foxy-rosbridge-server \
         ros-foxy-rqt\* \
         ros-foxy-moveit \
         ros-foxy-moveit-ros \

@@ -87,11 +87,16 @@
         ".devcontainer/devcontainer.json"
     ],
     "[python]": {
-        "editor.formatOnSave": true,
-        "editor.formatOnSaveMode": "file",
-        "editor.formatOnPaste": false,
         "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
     },
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
     "black-formatter.args": [
         "--line-length=80",
     ],
