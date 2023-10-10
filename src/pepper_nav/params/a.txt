@@ -1,0 +1,89 @@
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      global_frame: map
+      robot_radius: 0.25 # Pepper has an actual radius of 0.35
+      robot_base_frame: base_link
+      resolution: 0.02
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::VoxelLayer"
+        enabled: True
+        observation_sources: pointcloud
+        footprint_clearing_enabled: True
+        max_obstacle_height: 1.5
+        min_obstacle_height: 0.1
+        pointcloud:
+          topic: /camera/depth/points
+          data_type: "PointCloud2"
+          marking: True
+          clearing: True
+
+        scan:
+          topic: /scan
+          obstacle_range: 5.0 # Detect obstacles at this range
+          raytrace_range: 8.0 # Pepper limit of pointcloud
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          inf_is_valid: False
+        static_layer:
+          plugin: "nav2_costmap_2d::StaticLayer"
+          map_subscribe_transient_local: True
+          enabled: true
+          subscribe_to_updates: true
+          transform_tolerance: 10.0
+        inflation_layer:
+          plugin: "nav2_costmap_2d::InflationLayer"
+          enabled: true
+          inflation_radius: 0.3 # Can be tweaked
+          cost_scaling_factor: 5.0
+          inflate_unknown: false
+          inflate_around_unknown: true
+        always_send_full_costmap: True
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: true
+      width: 4
+      height: 4
+      resolution: 0.02
+      robot_radius: 0.25 # Pepper has an actual radius of 0.35
+      plugins: ["inflation_layer", "obstacle_layer"]
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        enabled: True
+        cost_scaling_factor: 5.0
+        inflation_radius: 0.3
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::VoxelLayer"
+        enabled: True
+        observation_sources: pointcloud
+        footprint_clearing_enabled: True
+        max_obstacle_height: 1.5
+        min_obstacle_height: 0.1
+        pointcloud:
+          topic: /camera/depth/points
+          data_type: "PointCloud2"
+          marking: True
+          clearing: True
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          raytrace_range: 8.0
+          obstacle_range: 7.5
+          data_type: "LaserScan"
+      always_send_full_costmap: True
+  local_costmap_client:
+    ros__parameters:
+      use_sim_time: False
+  local_costmap_rclcpp_node:
+    ros__parameters:
+      use_sim_time: False

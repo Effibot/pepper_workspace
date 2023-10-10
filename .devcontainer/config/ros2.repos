@@ -1,42 +1,18 @@
 # List of repositories to use within your workspace
 repositories:
-  libqicore:
-    type: git
-    url: https://github.com/Effibot/libqicore.git
-    version: ros2
-  naoqi_bridge_msgs2:
-    type: git
-    url: https://github.com/Effibot/naoqi_bridge_msgs2.git
-    version: main
-  naoqi_driver2:
-    type: git
-    url: https://github.com/Effibot/naoqi_driver2.git
-    version: main
-  navigation2:
-    type: git
-    url: https://github.com/Effibot/navigation2-foxy.git
-    version: foxy-devel
-  pepper_meta:
-    type: git
-    url: https://github.com/Effibot/pepper_meta.git
-    version: main
   image_pipeline:
     type: git
-    url: https://github.com/Effibot/image_pipeline.git
+    url: https://github.com/ros-perception/image_pipeline
     version: foxy
   rgbd_launch:
     type: git
-    url: https://github.com/Effibot/rgbd_launch.git
+    url: https://github.com/simwijs/rgbd_launch
     version: foxy
   vizanti:
     type: git
     url: https://github.com/MoffKalast/vizanti.git
     version: ros2
-  ros_naoqi_tts:
-    type: git
-    url: https://github.com/Effibot/ros_naoqi_tts.git
-    version: main
   #pepper_meshes2:
   #  type: git
-  #  url: https://github.com/Effibot/pepper_meshes2.git
+  #  url: https://github.com/ros-naoqi/pepper_meshes2
   #  version: main

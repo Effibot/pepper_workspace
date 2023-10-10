@@ -1,0 +1,9 @@
+ros1_package_name: 'naoqi_bridge_msgs'
+ros1_message_name: 'AudioBuffer'
+ros2_package_name: 'naoqi_bridge_msgs'
+ros2_message_name: 'AudioBuffer'
+fields_1_to_2:
+  header: 'header'
+  frequency: 'frequency'
+  channelMap: 'channel_map'
+  data: 'data'
